@@ -25,7 +25,7 @@
 </head>
 <body class="bg-white">
     <!-- Header -->
-    <header class="bg-white shadow-sm">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -36,7 +36,7 @@
                     <span class="text-smartpoint-dark font-bold text-xl">SmartPoint</span>
                 </div>
 
-                <!-- Navigation -->
+                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="#features" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Features</a>
                     <a href="#pricing" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Pricing</a>
@@ -44,12 +44,34 @@
                     <a href="#contact" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Contact</a>
                 </nav>
 
-                <!-- Auth Buttons -->
-                <div class="flex items-center space-x-4">
+                <!-- Desktop Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
                     <a href="{{ route('login') }}" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Sign In</a>
                     <a href="{{ route('register') }}" class="bg-smartpoint-red text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">Start Free Trial</a>
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-smartpoint-dark focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4">
+            <nav class="flex flex-col items-center space-y-4">
+                <a href="#features" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Features</a>
+                <a href="#pricing" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Pricing</a>
+                <a href="#solutions" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Solutions</a>
+                <a href="#contact" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Contact</a>
+                <div class="border-t w-full my-4"></div>
+                <a href="{{ route('login') }}" class="text-smartpoint-dark hover:text-smartpoint-red transition-colors">Sign In</a>
+                <a href="{{ route('register') }}" class="w-full text-center bg-smartpoint-red text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">Start Free Trial</a>
+            </nav>
         </div>
     </header>
 
@@ -61,51 +83,38 @@
     @endif
 
     <!-- Hero Section -->
-    <section class="relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="text-center">
-                <!-- AI Analytics Badge -->
-                <div class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border border-red-200 bg-white text-gray-700 mb-8 hover:scale-105 transition-all duration-0 hover:shadow-lg">
-                    <div class="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center mr-2">
-                        <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
+    <section class="relative bg-gradient-to-b from-red-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen pt-16">
+                <!-- Text Content -->
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border border-red-200 bg-white text-gray-700 mb-8">
+                        Now with Advanced AI Analytics
                     </div>
-                    Now with Advanced AI Analytics
+                    <h1 class="text-5xl md:text-6xl font-bold text-smartpoint-dark mb-6 leading-tight">
+                        The Future of
+                        <span class="block text-smartpoint-red">Point of Sale</span>
+                        is Here
+                    </h1>
+                    <p class="text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+                        Experience the next generation of retail technology. Our AI-powered POS system transforms your business with intelligent insights and seamless automation.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="{{ route('register') }}" class="bg-smartpoint-red text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition-transform duration-300 transform hover:-translate-y-1">
+                            Get Started Free
+                        </a>
+                        <button class="bg-white border-2 border-gray-300 text-smartpoint-dark px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-transform duration-300 transform hover:-translate-y-1">
+                            Watch Demo
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Main Headline -->
-                <h1 class="text-5xl md:text-6xl font-bold text-smartpoint-dark mb-6 leading-tight animate-fade-in-up">
-                    The Future of<br>
-                    <span class="text-smartpoint-red animate-pulse hover:scale-105 transition-transform duration-300">Point of Sale</span><br>
-                    is Here
-                </h1>
-
-                <!-- Description -->
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed animate-fade-in-up animation-delay-200">
-                    Experience the next generation of retail technology. Our AI-powered POS system doesn't just process transactions—it transforms your entire business with intelligent insights, predictive analytics, and seamless automation.
-                </p>
-
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
-                    <a href="{{ route('register') }}" class="bg-smartpoint-red text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition-all duration-300 inline-flex items-center hover:scale-105 hover:shadow-xl transform hover:-translate-y-1">
-                        Get Started Free
-                        <svg class="w-5 h-5 ml-2 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </a>
-                    <button class="border-2 border-gray-300 text-smartpoint-dark px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-all duration-300 inline-flex items-center hover:scale-105 hover:shadow-lg transform hover:-translate-y-1">
-                        <svg class="w-5 h-5 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        Watch Demo
-                    </button>
+                <!-- Image Content -->
+                <div class="flex items-center justify-center">
+                    <img src="https://i.ibb.co/9v0z6zF/smartpoint-hero.png" alt="SmartPoint POS Dashboard" class="w-full h-auto max-w-2xl rounded-lg shadow-2xl">
                 </div>
             </div>
         </div>
-
-        <!-- Background Accent -->
-        <div class="absolute top-20 left-10 w-96 h-96 bg-smartpoint-red opacity-10 rounded-full blur-3xl animate-float"></div>
     </section>
 
     <style>
@@ -763,16 +772,10 @@
         </div>
     </footer>
 
-    <!-- Mobile Menu -->
-    <div class="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-        <div class="bg-smartpoint-red text-white px-6 py-3 rounded-full shadow-lg">
-            <a href="{{ route('register') }}" class="font-semibold">Get Started</a>
-        </div>
-    </div>
-
-    <!-- Auto-dismiss success alert after 5 seconds -->
+    <!-- Auto-dismiss success alert and mobile menu toggle script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Success alert auto-dismiss
             const successAlert = document.getElementById('successAlert');
             if (successAlert) {
                 setTimeout(function() {
@@ -782,6 +785,15 @@
                         successAlert.remove();
                     }, 500);
                 }, 5000); // 5 seconds
+            }
+
+            // Mobile menu toggle
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
             }
         });
     </script>
