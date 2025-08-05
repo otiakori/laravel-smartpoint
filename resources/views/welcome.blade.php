@@ -85,9 +85,9 @@
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-b from-red-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen pt-16">
+            <div class="grid grid-cols-1 gap-12 items-center min-h-screen pt-16">
                 <!-- Text Content -->
-                <div class="text-center lg:text-left">
+                <div class="text-center">
                     <div class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium border border-red-200 bg-white text-gray-700 mb-8">
                         Now with Advanced AI Analytics
                     </div>
@@ -96,10 +96,10 @@
                         <span class="block text-smartpoint-red">Point of Sale</span>
                         is Here
                     </h1>
-                    <p class="text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8 leading-relaxed">
                         Experience the next generation of retail technology. Our AI-powered POS system transforms your business with intelligent insights and seamless automation.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <a href="{{ route('register') }}" class="bg-smartpoint-red text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition-transform duration-300 transform hover:-translate-y-1">
                             Get Started Free
                         </a>
@@ -107,11 +107,6 @@
                             Watch Demo
                         </button>
                     </div>
-                </div>
-
-                <!-- Image Content -->
-                <div class="flex items-center justify-center">
-                    <img src="https://i.ibb.co/9v0z6zF/smartpoint-hero.png" alt="SmartPoint POS Dashboard" class="w-full h-auto max-w-2xl rounded-lg shadow-2xl">
                 </div>
             </div>
         </div>
