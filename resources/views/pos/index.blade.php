@@ -1,5 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('content')
+@section('page-title', 'Point of Sale')
+
+@section('page-content')
     @livewire('pos-system')
 @endsection 

@@ -11,11 +11,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::where('tenant_id', Auth::user()->tenant_id)
-            ->orderBy('name')
-            ->paginate(10);
-
-        return view('customers.index', compact('customers'));
+        return view('customers.index');
     }
 
     public function create()

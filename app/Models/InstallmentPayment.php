@@ -12,6 +12,8 @@ class InstallmentPayment extends Model
 
     protected $fillable = [
         'installment_sale_id',
+        'installment_plan_id',
+        'payment_schedule_id',
         'installment_number',
         'amount',
         'due_date',
@@ -22,6 +24,11 @@ class InstallmentPayment extends Model
         'notes',
         'processed_by',
         'reference_number',
+        'tenant_id',
+    ];
+
+    protected $attributes = [
+        'installment_sale_id' => null,
     ];
 
     protected $casts = [
@@ -32,9 +39,20 @@ class InstallmentPayment extends Model
         'installment_number' => 'integer',
     ];
 
+    // Relationships
     public function installmentSale(): BelongsTo
     {
         return $this->belongsTo(InstallmentSale::class);
+    }
+
+    public function installmentPlan(): BelongsTo
+    {
+        return $this->belongsTo(InstallmentPlan::class);
+    }
+
+    public function paymentSchedule(): BelongsTo
+    {
+        return $this->belongsTo(PaymentSchedule::class);
     }
 
     public function processedBy(): BelongsTo
@@ -42,6 +60,28 @@ class InstallmentPayment extends Model
         return $this->belongsTo(User::class, 'processed_by');
     }
 
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
+    // Scopes
+    public function scopeByTenant($query, $tenantId)
+    {
+        return $query->where('tenant_id', $tenantId);
+    }
+
+    public function scopeByInstallmentPlan($query, $installmentPlanId)
+    {
+        return $query->where('installment_plan_id', $installmentPlanId);
+    }
+
+    public function scopeByPaymentSchedule($query, $paymentScheduleId)
+    {
+        return $query->where('payment_schedule_id', $paymentScheduleId);
+    }
+
+    // Methods
     public function isPaid(): bool
     {
         return $this->status === 'paid';

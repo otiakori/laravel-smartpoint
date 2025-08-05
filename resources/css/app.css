@@ -9,3 +9,51 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Custom Pagination Styles */
+.pagination {
+    @apply flex items-center space-x-1;
+}
+
+/* Hide scrollbar for category tabs */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
+
+/* Line clamp for product names */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.pagination > * {
+    @apply flex items-center;
+}
+
+.pagination a,
+.pagination span {
+    @apply px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200;
+}
+
+.pagination a {
+    @apply text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400;
+}
+
+.pagination span {
+    @apply text-white bg-smartpoint-red border border-smartpoint-red;
+}
+
+.pagination .disabled {
+    @apply text-gray-400 bg-gray-100 border-gray-200 cursor-not-allowed;
+}
+
+.pagination .disabled:hover {
+    @apply bg-gray-100 border-gray-200;
+}

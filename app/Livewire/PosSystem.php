@@ -214,7 +214,8 @@ class PosSystem extends Component
 
     public function getTaxProperty()
     {
-        return $this->subtotal * 0.085; // 8.5% tax
+        $tenant = Auth::user()->tenant;
+        return $tenant->calculateTax($this->subtotal);
     }
 
     public function getTotalProperty()
@@ -248,15 +249,19 @@ class PosSystem extends Component
             ]);
 
             // Create sale items
+            $tenant = Auth::user()->tenant;
             foreach ($this->cart as $item) {
+                $itemTotal = $item['price'] * $item['quantity'];
+                $itemTax = $tenant->calculateTax($itemTotal);
+                
                 SaleItem::create([
                     'sale_id' => $sale->id,
                     'product_id' => $item['id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['price'],
-                    'total_price' => $item['price'] * $item['quantity'],
+                    'total_price' => $itemTotal,
                     'discount_amount' => 0,
-                    'tax_amount' => ($item['price'] * $item['quantity']) * 0.085,
+                    'tax_amount' => $itemTax,
                 ]);
 
                 // Update product stock
@@ -273,6 +278,75 @@ class PosSystem extends Component
 
             return redirect()->route('pos.receipt', $sale->id)
                 ->with('success', 'Sale completed successfully!');
+
+        } catch (\Exception $e) {
+            $this->isProcessing = false;
+            session()->flash('error', 'Error processing sale: ' . $e->getMessage());
+        }
+    }
+
+    public function convertToInstallmentPlan()
+    {
+        if (empty($this->cart)) {
+            session()->flash('error', 'Cart is empty.');
+            return;
+        }
+
+        if (!$this->selectedCustomer) {
+            session()->flash('error', 'Please select a customer for installment plan.');
+            return;
+        }
+
+        $this->isProcessing = true;
+
+        try {
+            // Create the sale first
+            $sale = Sale::create([
+                'tenant_id' => Auth::user()->tenant_id,
+                'user_id' => Auth::user()->id,
+                'customer_id' => $this->selectedCustomer,
+                'sale_number' => 'SALE-' . time(),
+                'subtotal' => $this->subtotal,
+                'tax_amount' => $this->tax,
+                'discount_amount' => 0,
+                'total_amount' => $this->total,
+                'payment_method' => 'cash', // Initial payment
+                'payment_status' => 'paid',
+                'sale_status' => 'completed',
+                'sale_date' => now(),
+            ]);
+
+            // Create sale items
+            $tenant = Auth::user()->tenant;
+            foreach ($this->cart as $item) {
+                $itemTotal = $item['price'] * $item['quantity'];
+                $itemTax = $tenant->calculateTax($itemTotal);
+                
+                SaleItem::create([
+                    'sale_id' => $sale->id,
+                    'product_id' => $item['id'],
+                    'quantity' => $item['quantity'],
+                    'unit_price' => $item['price'],
+                    'total_price' => $itemTotal,
+                    'discount_amount' => 0,
+                    'tax_amount' => $itemTax,
+                ]);
+
+                // Update product stock
+                $product = Product::find($item['id']);
+                if ($product) {
+                    $product->decrement('stock_quantity', $item['quantity']);
+                }
+            }
+
+            // Clear cart
+            $this->cart = [];
+            $this->selectedCustomer = '';
+            $this->isProcessing = false;
+
+            // Redirect to create installment plan
+            return redirect()->route('installment-plans.create', ['sale_id' => $sale->id])
+                ->with('success', 'Sale completed! Now create the installment plan.');
 
         } catch (\Exception $e) {
             $this->isProcessing = false;

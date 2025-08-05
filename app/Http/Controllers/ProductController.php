@@ -12,17 +12,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('tenant_id', Auth::user()->tenant_id)
-            ->with('category')
-            ->orderBy('name')
-            ->paginate(12);
-
-        $categories = Category::where('tenant_id', Auth::user()->tenant_id)
-            ->where('status', 'active')
-            ->orderBy('name')
-            ->get();
-
-        return view('products.index', compact('products', 'categories'));
+        return view('products.index');
     }
 
     public function create()

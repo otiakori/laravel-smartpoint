@@ -63,6 +63,11 @@ class Sale extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function installmentPlan(): HasMany
+    {
+        return $this->hasMany(InstallmentPlan::class);
+    }
+
     public function isPaid(): bool
     {
         return $this->payment_status === 'paid';

@@ -56,7 +56,7 @@ class CategoryController extends Controller
             ]);
         }
 
-        return redirect()->route('products.index')
+        return redirect()->route('categories.index')
             ->with('success', 'Category created successfully!');
     }
 

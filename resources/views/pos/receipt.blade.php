@@ -27,10 +27,10 @@
                     <div class="flex justify-between items-center py-2">
                         <div class="flex-1">
                             <p class="font-medium text-gray-900">{{ $item->product->name }}</p>
-                            <p class="text-sm text-gray-600">{{ $item->quantity }} × ${{ number_format($item->unit_price, 2) }}</p>
+                            <p class="text-sm text-gray-600">{{ $item->quantity }} × {{ formatCurrency($item->unit_price) }}</p>
                         </div>
                         <div class="text-right">
-                            <p class="font-semibold text-gray-900">${{ number_format($item->total_price, 2) }}</p>
+                            <p class="font-semibold text-gray-900">{{ formatCurrency($item->total_price) }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -40,21 +40,23 @@
             <div class="border-t border-gray-200 pt-4">
                 <div class="flex justify-between text-sm mb-2">
                     <span>Subtotal:</span>
-                    <span>${{ number_format($sale->subtotal, 2) }}</span>
+                                            <span>{{ formatCurrency($sale->subtotal) }}</span>
                 </div>
-                <div class="flex justify-between text-sm mb-2">
-                    <span>Tax:</span>
-                    <span>${{ number_format($sale->tax_amount, 2) }}</span>
-                </div>
+                                @if($sale->tax_amount > 0)
+                    <div class="flex justify-between text-sm mb-2">
+                        <span>{{ Auth::user()->tenant->tax_name }} ({{ Auth::user()->tenant->tax_rate }}%):</span>
+                        <span>{{ formatCurrency($sale->tax_amount) }}</span>
+                    </div>
+                @endif
                 @if($sale->discount_amount > 0)
                     <div class="flex justify-between text-sm mb-2">
                         <span>Discount:</span>
-                        <span>-${{ number_format($sale->discount_amount, 2) }}</span>
+                        <span>-{{ formatCurrency($sale->discount_amount) }}</span>
                     </div>
                 @endif
                 <div class="flex justify-between font-bold text-lg text-smartpoint-red border-t border-gray-200 pt-2">
                     <span>Total:</span>
-                    <span>${{ number_format($sale->total_amount, 2) }}</span>
+                                            <span>{{ formatCurrency($sale->total_amount) }}</span>
                 </div>
             </div>
 

@@ -36,37 +36,6 @@
     </header>
 
     <div class="flex flex-col lg:flex-row">
-        <!-- Sidebar - Hidden on mobile, shown on desktop -->
-        <aside class="hidden lg:block w-20 bg-gray-50 border-r border-gray-200">
-            <nav class="mt-8 space-y-4">
-                <a href="{{ route('pos.index') }}" class="flex flex-col items-center py-3 px-2 bg-smartpoint-red text-white rounded-lg mx-2">
-                    <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                    </svg>
-                    <span class="text-xs">POS</span>
-                </a>
-                <a href="{{ route('dashboard') }}" class="flex flex-col items-center py-3 px-2 text-gray-600 hover:text-smartpoint-red hover:bg-red-50 rounded-lg mx-2 transition-colors">
-                    <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"></path>
-                    </svg>
-                    <span class="text-xs">Dashboard</span>
-                </a>
-                <a href="#" class="flex flex-col items-center py-3 px-2 text-gray-600 hover:text-smartpoint-red hover:bg-red-50 rounded-lg mx-2 transition-colors">
-                    <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                    </svg>
-                    <span class="text-xs">Inventory</span>
-                </a>
-                <a href="#" class="flex flex-col items-center py-3 px-2 text-gray-600 hover:text-smartpoint-red hover:bg-red-50 rounded-lg mx-2 transition-colors">
-                    <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                    <span class="text-xs">Customers</span>
-                </a>
-            </nav>
-        </aside>
-
         <!-- Main Content -->
         <div class="flex-1 flex flex-col lg:flex-row">
             <!-- Product Display Area -->
@@ -85,15 +54,15 @@
                 </div>
 
                 <!-- Category Tabs -->
-                <div class="mb-6">
-                    <div class="flex space-x-2 overflow-x-auto pb-2">
+                <div class="mb-4 sm:mb-6">
+                    <div class="flex space-x-1 sm:space-x-2 overflow-x-auto pb-2 scrollbar-hide">
                         <button wire:click="selectCategory('all')" 
-                                class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap {{ $selectedCategory === 'all' ? 'bg-smartpoint-red text-white' : 'bg-gray-200 text-gray-700' }}">
+                                class="px-3 py-2 sm:px-4 rounded-lg font-medium transition-colors whitespace-nowrap text-xs sm:text-sm {{ $selectedCategory === 'all' ? 'bg-smartpoint-red text-white' : 'bg-gray-200 text-gray-700' }}">
                             All
                         </button>
                         @foreach($this->categories as $category)
                             <button wire:click="selectCategory('{{ $category->name }}')" 
-                                    class="px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap {{ $selectedCategory === $category->name ? 'bg-smartpoint-red text-white' : 'bg-gray-200 text-gray-700' }}">
+                                    class="px-3 py-2 sm:px-4 rounded-lg font-medium transition-colors whitespace-nowrap text-xs sm:text-sm {{ $selectedCategory === $category->name ? 'bg-smartpoint-red text-white' : 'bg-gray-200 text-gray-700' }}">
                                 {{ $category->name }}
                             </button>
                         @endforeach
@@ -122,8 +91,8 @@
                     </div>
                 @endif
 
-                <!-- Product Grid -->
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                <!-- Product Grid - Improved Responsive Layout -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-3 sm:gap-4">
                     @foreach($this->products as $product)
                         @php
                             $colors = [
@@ -145,29 +114,29 @@
                             $colorKey = $colorKeys[$colorIndex];
                             $color = $colors[$colorKey];
                         @endphp
-                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer border border-gray-100" 
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer border border-gray-100 h-full flex flex-col" 
                              wire:click="addToCart({{ $product->id }})">
-                            <div class="p-4">
+                            <div class="p-3 flex flex-col h-full">
                                 <!-- Icon Container -->
-                                <div class="flex justify-center mb-4">
-                                    <div class="w-16 h-12 {{ $color['icon'] }} rounded-lg flex items-center justify-center">
+                                <div class="flex justify-center mb-3 flex-shrink-0">
+                                    <div class="w-12 h-12 {{ $color['icon'] }} rounded-lg flex items-center justify-center">
                                         @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-8 h-8 object-cover rounded">
+                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-6 h-6 object-cover rounded">
                                         @else
                                             @if($product->category && str_contains(strtolower($product->category->name), 'beverage'))
-                                                <svg class="w-8 h-8 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-6 h-6 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                                 </svg>
                                             @elseif($product->category && str_contains(strtolower($product->category->name), 'food'))
-                                                <svg class="w-8 h-8 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-6 h-6 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                                 </svg>
                                             @elseif($product->category && str_contains(strtolower($product->category->name), 'dessert'))
-                                                <svg class="w-8 h-8 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-6 h-6 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                                 </svg>
                                             @else
-                                                <svg class="w-8 h-8 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg class="w-6 h-6 {{ $color['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                                                 </svg>
                                             @endif
@@ -176,11 +145,11 @@
                                 </div>
                                 
                                 <!-- Product Name -->
-                                <h3 class="font-semibold text-gray-900 text-center mb-2 text-sm leading-tight">{{ $product->name }}</h3>
+                                <h3 class="font-semibold text-gray-900 text-center mb-2 text-xs leading-tight flex-grow line-clamp-2 min-h-[2.5rem]">{{ $product->name }}</h3>
                                 
                                 <!-- Price and Stock -->
-                                <div class="text-center">
-                                    <p class="text-red-600 font-bold text-lg mb-1">${{ number_format($product->price, 2) }}</p>
+                                <div class="text-center mt-auto">
+                                    <p class="text-red-600 font-bold text-sm mb-1">{{ number_format($product->price, 2) }}</p>
                                     <p class="text-xs {{ $product->stock_quantity <= 5 ? 'text-orange-600 font-medium' : 'text-gray-500' }}">
                                         Stock: {{ $product->stock_quantity }}
                                         @if($product->stock_quantity <= 5 && $product->stock_quantity > 0)
@@ -243,7 +212,7 @@
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="font-medium text-gray-900 text-sm truncate">{{ $item['name'] }}</p>
-                                    <p class="text-sm text-gray-600">${{ number_format($item['price'], 2) }} each</p>
+                                    <p class="text-sm text-gray-600">{{ formatCurrency($item['price']) }} each</p>
                                 </div>
                             </div>
                             <div class="flex items-center space-x-2">
@@ -283,15 +252,17 @@
                 <div class="border-t border-gray-200 pt-4 mb-6">
                     <div class="flex justify-between text-sm text-gray-600 mb-2">
                         <span>Subtotal:</span>
-                        <span>${{ number_format($this->subtotal, 2) }}</span>
+                        <span>{{ formatCurrency($this->subtotal) }}</span>
                     </div>
-                    <div class="flex justify-between text-sm text-gray-600 mb-2">
-                        <span>Tax (8.5%):</span>
-                        <span>${{ number_format($this->tax, 2) }}</span>
-                    </div>
+                    @if(Auth::user()->tenant->isTaxEnabled())
+                        <div class="flex justify-between text-sm text-gray-600 mb-2">
+                            <span>{{ Auth::user()->tenant->tax_name }} ({{ Auth::user()->tenant->tax_rate }}%):</span>
+                            <span>{{ formatCurrency($this->tax) }}</span>
+                        </div>
+                    @endif
                     <div class="flex justify-between font-bold text-lg text-smartpoint-red">
                         <span>Total:</span>
-                        <span>${{ number_format($this->total, 2) }}</span>
+                        <span>{{ formatCurrency($this->total) }}</span>
                     </div>
                 </div>
 
@@ -305,6 +276,17 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
                         </svg>
                         <span wire:loading.remove>Process Payment</span>
+                        <span wire:loading>Processing...</span>
+                    </button>
+
+                    <button wire:click="convertToInstallmentPlan" 
+                            wire:loading.attr="disabled"
+                            @if(empty($cart) || !$selectedCustomer) disabled @endif
+                            class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 transition-colors flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        <span wire:loading.remove>Create Installment Plan</span>
                         <span wire:loading>Processing...</span>
                     </button>
 
@@ -388,6 +370,9 @@
             </div>
         </div>
     @endif
+
+    <!-- Chat Bot Component -->
+    @livewire('chat-bot')
 
     <!-- Debug JavaScript -->
     <script>
